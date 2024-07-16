@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Non-Breaking Space Example</title>
+    <style>
+        .container {
+            width: 200px; /* Small width to demonstrate line breaking */
+            border: 1px solid black;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        This is a reference to Wells Fargo Bank.
+    </div>
+
+    <div class="container">
+        Another mention of Wells Fargo Bank here.
+    </div>
+
+    <script>
+        document.querySelectorAll('.container').forEach(container => {
+            const treeWalker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+            while (treeWalker.nextNode()) {
+                const currentNode = treeWalker.currentNode;
+                if (currentNode.nodeValue.includes('Wells Fargo')) {
+                    currentNode.nodeValue = currentNode.nodeValue.replace(/wells fargo/gi, 'Wells\u00A0Fargo');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
